@@ -1,0 +1,68 @@
+<!-- checkout.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - 3D Print Store</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    input, button { display: block; margin-top: 10px; padding: 8px; }
+    ul { padding-left: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Checkout</h1>
+  <label for="name">Name:</label>
+  <input type="text" id="name">
+  <label for="studentId">Student ID:</label>
+  <input type="text" id="studentId">
+  <h2>Your Items</h2>
+  <ul id="cart-list"></ul>
+  <p><strong>Total: $<span id="total">0</span></strong></p>
+  <button id="payCash">Pay with Cash</button>
+  <div id="confirmation"></div>
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartList = document.getElementById('cart-list');
+    const totalEl = document.getElementById('total');
+    const payCashBtn = document.getElementById('payCash');
+    const confirmationEl = document.getElementById('confirmation');
+    let total = 0;
+
+    cart.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = `${item.name} - $${item.price}`;
+      cartList.appendChild(li);
+      total += item.price;
+    });
+
+    totalEl.textContent = total;
+
+    payCashBtn.addEventListener('click', async () => {
+      const name = document.getElementById('name').value;
+      const studentId = document.getElementById('studentId').value;
+      if (!name || !studentId) {
+        alert('Please fill in your name and student ID.');
+        return;
+      }
+
+      try {
+        const res = await fetch('https://shop-backend-zanw.onrender.com/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, studentId, items: cart, paymentMethod: 'cash' })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Unknown error');
+        confirmationEl.innerHTML = `Order placed! Show this code to pay in cash: <strong>#${data.orderId}</strong>`;
+        localStorage.removeItem('cart');
+      } catch (err) {
+        console.error(err);
+        alert('There was an error placing your order.');
+      }
+    });
+  </script>
+</body>
+</html>

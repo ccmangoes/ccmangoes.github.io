@@ -1,0 +1,44 @@
+<!-- cart.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart - 3D Print Store</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    li { margin-bottom: 10px; }
+    button { margin-left: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Your Cart</h1>
+  <ul id="cart-list"></ul>
+  <p><strong>Total: $<span id="total">0</span></strong></p>
+  <a href="checkout.html">Proceed to Checkout</a>
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartList = document.getElementById('cart-list');
+    const totalEl = document.getElementById('total');
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      const li = document.createElement('li');
+      li.textContent = `${item.name} - $${item.price}`;
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = 'Remove';
+      removeBtn.onclick = () => {
+        cart.splice(index, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        location.reload();
+      };
+      li.appendChild(removeBtn);
+      cartList.appendChild(li);
+      total += item.price;
+    });
+
+    totalEl.textContent = total;
+  </script>
+</body>
+</html>

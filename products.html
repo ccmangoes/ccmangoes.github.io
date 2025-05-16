@@ -1,0 +1,43 @@
+<!-- products.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browse Products - 3D Print Store</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    .product { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
+    button { padding: 6px 12px; margin-top: 10px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Browse Products</h1>
+  <div class="product" data-name="Phone Stand" data-price="5">
+    <h2>Phone Stand</h2>
+    <p>Price: $5</p>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+  <div class="product" data-name="Keychain" data-price="3">
+    <h2>Keychain</h2>
+    <p>Price: $3</p>
+    <button class="add-to-cart">Add to Cart</button>
+  </div>
+  <a href="cart.html">Go to Cart</a>
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', e => {
+        const parent = e.target.closest('.product');
+        const name = parent.dataset.name;
+        const price = parseFloat(parent.dataset.price);
+        cart.push({ name, price });
+        localStorage.setItem('cart', JSON.stringify(cart));
+        alert(`${name} added to cart!`);
+      });
+    });
+  </script>
+</body>
+</html>
