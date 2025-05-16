@@ -40,7 +40,6 @@
 
   <script>
     const backend = 'https://shop-backend-zanw.onrender.com'; // Replace with your real backend URL
-    const ADMIN_TOKEN = document.getElementById('adminPassword').value;
 
     async function loadOrders() {
       const res = await fetch(`${backend}/admin`, {
@@ -86,18 +85,29 @@
 
     loadOrders();
 
-    const ADMIN_PASSWORD = 'letmein'; // CHANGE THIS
-
     function authenticate() {
-      const input = document.getElementById('adminPassword').value;
-      if (input === ADMIN_PASSWORD) {
-        localStorage.setItem('isAdmin', 'true');
-        document.getElementById('login').style.display = 'none';
-        document.getElementById('orders').style.display = 'block';
-        loadOrders();
-      } else {
-        document.getElementById('loginError').textContent = 'Incorrect password.';
-      }
+      const password = document.getElementById('adminPassword').value;
+
+      fetch(`${backend}/admin/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ password })
+      })
+        .then(res => {
+          if (!res.ok) throw new Error('Invalid login');
+          return res.json();
+        })
+        .then(() => {
+          localStorage.setItem('isAdmin', 'true');
+          document.getElementById('login').style.display = 'none';
+          document.getElementById('orders').style.display = 'block';
+          loadOrders();
+        })
+        .catch(() => {
+          document.getElementById('loginError').textContent = 'Incorrect password.';
+        });
     }
 
     window.onload = () => {
