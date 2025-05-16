@@ -27,13 +27,27 @@
 </head>
 <body>
   <h1>Admin - Unpaid Cash Orders</h1>
+
+  <div id="login" style="margin-bottom: 20px;">
+    <input type="password" id="adminPassword" placeholder="Enter admin password">
+    <button onclick="authenticate()">Login</button>
+    <p id="loginError" style="color:red;"></p>
+  </div>
+
+  <div id="orders" style="display: none;"></div>
+
   <div id="orders"></div>
 
   <script>
     const backend = 'https://shop-backend-zanw.onrender.com'; // Replace with your real backend URL
+    const ADMIN_TOKEN = 'June12013@!'
 
     async function loadOrders() {
-      const res = await fetch(`${backend}/admin`);
+      const res = await fetch(`${backend}/admin`, {
+        headers: {
+          'Authorization': `Bearer: ${ADMIN_TOKEN}`
+        }
+      });
       const orders = await res.json();
 
       const container = document.getElementById('orders');
@@ -71,6 +85,29 @@
     }
 
     loadOrders();
+
+    const ADMIN_PASSWORD = 'letmein'; // CHANGE THIS
+
+    function authenticate() {
+      const input = document.getElementById('adminPassword').value;
+      if (input === ADMIN_PASSWORD) {
+        localStorage.setItem('isAdmin', 'true');
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('orders').style.display = 'block';
+        loadOrders();
+      } else {
+        document.getElementById('loginError').textContent = 'Incorrect password.';
+      }
+    }
+
+    window.onload = () => {
+      if (localStorage.getItem('isAdmin') === 'true') {
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('orders').style.display = 'block';
+        loadOrders();
+      }
+    };
+
   </script>
 </body>
 </html>
