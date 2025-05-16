@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>3D Print Store</title>
   <style>
     body {
@@ -34,11 +34,11 @@
 
   <div id="checkout">
     <h2>Checkout</h2>
-    <label for="name">Name:</label><br />
-    <input type="text" id="name" /><br /><br />
+    <label for="name">Name:</label><br>
+    <input type="text" id="name"><br><br>
 
-    <label for="studentId">Student ID:</label><br />
-    <input type="text" id="studentId" /><br /><br />
+    <label for="studentId">Student ID:</label><br>
+    <input type="text" id="studentId"><br><br>
 
     <h3>Your Items</h3>
     <ul id="cart">
@@ -59,39 +59,53 @@
       { name: 'Keychain', price: 3 }
     ];
 
-    document.getElementById('payCash').addEventListener('click', () => {
-      const name = document.getElementById('name').value;
-      const studentId = document.getElementById('studentId').value;
+    document.addEventListener('DOMContentLoaded', () => {
+      const payCashBtn = document.getElementById('payCash');
+      const payStripeBtn = document.getElementById('payStripe');
 
-      if (!name || !studentId) {
-        alert('Please fill in your name and student ID.');
-        return;
-      }
+      payCashBtn.addEventListener('click', async () => {
+        const name = document.getElementById('name').value.trim();
+        const studentId = document.getElementById('studentId').value.trim();
 
-      fetch('https://your-backend.onrender.com/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          studentId,
-          items: cartItems,
-          paymentMethod: 'cash'
-        })
-      })
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('confirmation').innerHTML =
-          `<strong>Order placed!</strong><br />Show this code to pay in cash: <strong>#${data.orderId}</strong>`;
-      })
-      .catch(err => {
-        console.error(err);
-        alert('There was an error placing your order.');
+        if (!name || !studentId) {
+          alert('Please fill in your name and student ID.');
+          return;
+        }
+
+        try {
+          const response = await fetch('https://silver-capybara-v649w57g6973pxpr-3000.app.github.dev/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name,
+              studentId,
+              items: cartItems,
+              paymentMethod: 'cash'
+            })
+          });
+
+          console.log('Response status:', response.status);
+
+          const data = await response.json();
+          console.log('Response data:', data);
+
+          if (!response.ok) {
+            alert(`Error: ${data.error || 'Unknown error'}`);
+            return;
+          }
+
+          const confirmationDiv = document.getElementById('confirmation');
+          confirmationDiv.innerHTML = `<strong>Order placed!</strong><br>Show this code to pay in cash: <strong>#${data.orderId}</strong>`;
+        } catch (err) {
+          console.error('Error during order:', err);
+          alert('There was an error placing your order.');
+        }
       });
-    });
 
-    document.getElementById('payStripe').addEventListener('click', () => {
-      // Stripe payment flow would be implemented here
-      alert('Stripe payment coming soon!');
+
+      payStripeBtn.addEventListener('click', () => {
+        alert('Stripe payment coming soon!');
+      });
     });
   </script>
 </body>
