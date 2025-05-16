@@ -40,7 +40,7 @@
 
   <script>
     const backend = 'https://shop-backend-zanw.onrender.com'; // Replace with your real backend URL
-    const ADMIN_TOKEN = 'June12013@!'
+    const ADMIN_TOKEN = document.getElementById('adminPassword').value;
 
     async function loadOrders() {
       const res = await fetch(`${backend}/admin`, {
