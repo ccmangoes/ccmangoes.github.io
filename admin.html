@@ -3,91 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin Panel - 3D Print Orders</title>
+  <title>Admin Panel - 3D Print Store</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 0 auto;
       padding: 20px;
+    }
+    h1, h2 {
+      text-align: center;
     }
     .order {
       border: 1px solid #ccc;
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 5px;
+      padding: 12px;
+      margin: 12px 0;
+      border-radius: 8px;
     }
     button {
-      background-color: #5cb85c;
-      color: white;
-      padding: 5px 10px;
-      border: none;
-      cursor: pointer;
-      border-radius: 3px;
+      padding: 6px 12px;
+      margin-top: 10px;
+    }
+    #orders, #loginError {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <h1>Admin - Unpaid Cash Orders</h1>
+  <h1>Admin Panel</h1>
 
-  <div id="login" style="margin-bottom: 20px;">
-    <input type="password" id="adminPassword" placeholder="Enter admin password">
+  <!-- Login Form -->
+  <div id="login">
+    <h2>Please Log In</h2>
+    <input type="password" id="adminPassword" placeholder="Enter admin password" />
     <button onclick="authenticate()">Login</button>
-    <p id="loginError" style="color:red;"></p>
+    <p id="loginError" style="color: red;"></p>
   </div>
 
-  <div id="orders" style="display: none;"></div>
-
-  <div id="orders"></div>
+  <!-- Orders Section -->
+  <div id="orders">
+    <h2>Unpaid Cash Orders</h2>
+    <div id="ordersList"></div>
+  </div>
 
   <script>
-    const backend = 'https://shop-backend-zanw.onrender.com'; // Replace with your real backend URL
-
-    async function loadOrders() {
-      const res = await fetch(`${backend}/admin`, {
-        headers: {
-          'Authorization': `Bearer: ${ADMIN_TOKEN}`
-        }
-      });
-      const orders = await res.json();
-
-      const container = document.getElementById('orders');
-      container.innerHTML = '';
-
-      if (!orders.length) {
-        container.innerHTML = '<p>No unpaid cash orders.</p>';
-        return;
-      }
-
-      for (const order of orders) {
-        const items = JSON.parse(order.items)
-          .map(item => `${item.name} ($${item.price})`)
-          .join(', ');
-
-        const div = document.createElement('div');
-        div.className = 'order';
-        div.innerHTML = `
-          <p><strong>Name:</strong> ${order.name}</p>
-          <p><strong>Student ID:</strong> ${order.studentId}</p>
-          <p><strong>Items:</strong> ${items}</p>
-          <p><strong>Order ID:</strong> ${order.id}</p>
-          <button onclick="markPaid('${order.id}')">Mark as Paid</button>
-        `;
-        container.appendChild(div);
-      }
-    }
-
-    async function markPaid(id) {
-      await fetch(`${backend}/admin/${id}/paid`, {
-        method: 'PATCH'
-      });
-      alert('Order marked as paid.');
-      loadOrders(); // refresh list
-    }
-
-    loadOrders();
+    const backend = 'https://silver-capybara-v649w57g6973pxpr-3000.app.github.dev';
 
     function authenticate() {
-      const passwords = document.getElementById('adminPassword').value;
-      const password = 'June12013@!';
+      const password = document.getElementById('adminPassword').value;
 
       fetch(`${backend}/admin/login`, {
         method: 'POST',
@@ -96,29 +59,89 @@
         },
         body: JSON.stringify({ password })
       })
-        .then(res => {
-          if (!res.ok) throw new Error('Invalid login');
-          return res.json();
-        })
-        .then(() => {
-          localStorage.setItem('isAdmin', 'true');
-          document.getElementById('login').style.display = 'none';
-          document.getElementById('orders').style.display = 'block';
-          loadOrders();
-        })
-        .catch(() => {
-          document.getElementById('loginError').textContent = 'Incorrect password.';
-        });
-    }
-
-    window.onload = () => {
-      if (localStorage.getItem('isAdmin') === 'true') {
+      .then(res => {
+        if (!res.ok) throw new Error('Unauthorized');
+        return res.json();
+      })
+      .then(() => {
+        localStorage.setItem('isAdmin', 'true');
+        localStorage.setItem('adminToken', password);
         document.getElementById('login').style.display = 'none';
         document.getElementById('orders').style.display = 'block';
         loadOrders();
-      }
-    };
+      })
+      .catch(() => {
+        const errorEl = document.getElementById('loginError');
+        errorEl.textContent = 'Incorrect password.';
+        errorEl.style.display = 'block';
+      });
+    }
 
+    function loadOrders() {
+      const token = localStorage.getItem('adminToken');
+
+      fetch(`${backend}/admin`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById('ordersList');
+        list.innerHTML = '';
+
+        if (data.length === 0) {
+          list.innerHTML = '<p>No unpaid cash orders.</p>';
+          return;
+        }
+
+        data.forEach(order => {
+          const div = document.createElement('div');
+          div.className = 'order';
+          div.innerHTML = `
+            <strong>Name:</strong> ${order.name}<br>
+            <strong>Student ID:</strong> ${order.studentId}<br>
+            <strong>Items:</strong><br>
+            <ul>
+              ${JSON.parse(order.items).map(item => `<li>${item.name} - $${item.price}</li>`).join('')}
+            </ul>
+            <button onclick="markAsPaid('${order.id}')">Mark as Paid</button>
+          `;
+          list.appendChild(div);
+        });
+      })
+      .catch(err => {
+        alert('Failed to load orders.');
+        console.error(err);
+      });
+    }
+
+    function markAsPaid(orderId) {
+      const token = localStorage.getItem('adminToken');
+
+      fetch(`${backend}/admin/${orderId}/paid`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => res.json())
+      .then(() => {
+        alert('Order marked as paid.');
+        loadOrders();
+      })
+      .catch(err => {
+        alert('Failed to update order.');
+        console.error(err);
+      });
+    }
+
+    // Auto-login if already authenticated
+    if (localStorage.getItem('isAdmin') === 'true') {
+      document.getElementById('login').style.display = 'none';
+      document.getElementById('orders').style.display = 'block';
+      loadOrders();
+    }
   </script>
 </body>
 </html>
