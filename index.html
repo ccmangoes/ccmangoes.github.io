@@ -104,6 +104,14 @@
 
 
       payStripeBtn.addEventListener('click', async () => {
+        const name = document.getElementById('name').value.trim();
+        const studentId = document.getElementById('studentId').value.trim();
+
+        if (!name || !studentId) {
+          alert('Please fill in your name and student ID.');
+          return;
+        }
+        
         const response = await fetch('https://shop-backend-zanw.onrender.com/create-checkout-session', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
