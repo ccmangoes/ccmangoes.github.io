@@ -1,3 +1,13 @@
+#payStripe {
+    background: #006FFF;
+    box-shadow: 0 0 20px rgba(0, 111, 255, 0.4);
+}
+
+#payStripe:hover {
+    background: #005CE6;
+    box-shadow: 0 0 30px rgba(0, 111, 255, 0.6);
+}
+
 .add-to-cart,
 .button {
     display: inline-block;
