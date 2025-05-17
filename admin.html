@@ -37,7 +37,7 @@
   <div id="login">
     <h2>Please Log In</h2>
     <input type="password" id="adminPassword" placeholder="Enter admin password" />
-    <button onclick="authenticate()">Login</button>
+    <button onclick="authenticate()" class="button">Login</button>
     <p id="loginError" style="color: red;"></p>
   </div>
 
@@ -106,7 +106,7 @@
             <ul>
               ${JSON.parse(order.items).map(item => `<li>${item.name} - $${item.price}</li>`).join('')}
             </ul>
-            <button onclick="markAsPaid('${order.id}')">Mark as Paid</button>
+            <button onclick="markAsPaid('${order.id}')" class="button">Mark as Paid</button>
           `;
           list.appendChild(div);
         });
