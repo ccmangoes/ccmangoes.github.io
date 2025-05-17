@@ -1,4 +1,4 @@
-.content a.button {
+button {
     display: inline-block;
     margin-top: 30px;
     padding: 15px 40px;
@@ -14,7 +14,7 @@
     z-index: 1;
 }
 
-.content a.button:hover {
+button:hover {
     background: #e65c00;
     transform: translateY(-2px);
     box-shadow: 0 0 30px rgba(255,111,0,0.6);
