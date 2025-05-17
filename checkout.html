@@ -68,8 +68,8 @@
     });
 
     payCardBtn.addEventListener('click', async () => {
-      const name = document.getElementById('name').value.trim();
-      const studentId = document.getElementById('studentId').value.trim();
+      const name = document.getElementById('name').value;
+      const studentId = document.getElementById('studentId').value;
 
       if (!name || !studentId) {
         alert('Please fill in your name and student ID.');
