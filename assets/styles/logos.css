@@ -1,6 +1,6 @@
 #stripeLogo {
-  width: 20px !important;
-  height: 20px !important;
+  width: 50px;  /* adjust as needed */
+  height: auto;
 }
 
 img#stripeLogo {
