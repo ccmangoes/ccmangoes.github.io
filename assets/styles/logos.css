@@ -1,3 +1,8 @@
-img.stripeLogo {
+#stripeLogo {
+  width: 100px !important;
+  height: auto !important;
+}
+
+img#stripeLogo {
   background-color: transparent !important;
 }
