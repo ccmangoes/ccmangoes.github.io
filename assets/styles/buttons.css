@@ -1,4 +1,4 @@
-.product button {
+.button-style {
     display: inline-block;
     margin-top: 30px;
     padding: 15px 40px;
@@ -9,123 +9,13 @@
     border: none;
     border-radius: 10px;
     text-decoration: none;
-    box-shadow: 0 0 20px rgba(255,111,0,0.4);
+    box-shadow: 0 0 20px rgba(255, 111, 0, 0.4);
     transition: background 0.3s, transform 0.2s;
     z-index: 1;
 }
 
-.product button:hover {
+.button-style:hover {
     background: #e65c00;
     transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba(255,111,0,0.6);
-}
-
-.checkout button {
-    display: inline-block;
-    margin-top: 30px;
-    padding: 15px 40px;
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: white;
-    background: #ff6f00;
-    border: none;
-    border-radius: 10px;
-    text-decoration: none;
-    box-shadow: 0 0 20px rgba(255,111,0,0.4);
-    transition: background 0.3s, transform 0.2s;
-    z-index: 1;
-}
-
-.checkout button:hover {
-    background: #e65c00;
-    transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba(255,111,0,0.6);
-}
-
-button {
-    display: inline-block;
-    margin-top: 30px;
-    padding: 15px 40px;
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: white;
-    background: #ff6f00;
-    border: none;
-    border-radius: 10px;
-    text-decoration: none;
-    box-shadow: 0 0 20px rgba(255,111,0,0.4);
-    transition: background 0.3s, transform 0.2s;
-    z-index: 1;
-}
-
-button:hover {
-    background: #e65c00;
-    transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba(255,111,0,0.6);
-}
-
-a {
-    display: inline-block;
-    margin-top: 30px;
-    padding: 15px 40px;
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: white;
-    background: #ff6f00;
-    border: none;
-    border-radius: 10px;
-    text-decoration: none;
-    box-shadow: 0 0 20px rgba(255,111,0,0.4);
-    transition: background 0.3s, transform 0.2s;
-    z-index: 1;
-}
-
-a:hover {
-    background: #e65c00;
-    transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba(255,111,0,0.6);
-}
-
-.orders .ordersList button {
-    display: inline-block;
-    margin-top: 30px;
-    padding: 15px 40px;
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: white;
-    background: #ff6f00;
-    border: none;
-    border-radius: 10px;
-    text-decoration: none;
-    box-shadow: 0 0 20px rgba(255,111,0,0.4);
-    transition: background 0.3s, transform 0.2s;
-    z-index: 1;
-}
-
-.orders .ordersList button:hover {
-    background: #e65c00;
-    transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba(255,111,0,0.6);
-}
-
-.login button {
-    display: inline-block;
-    margin-top: 30px;
-    padding: 15px 40px;
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: white;
-    background: #ff6f00;
-    border: none;
-    border-radius: 10px;
-    text-decoration: none;
-    box-shadow: 0 0 20px rgba(255,111,0,0.4);
-    transition: background 0.3s, transform 0.2s;
-    z-index: 1;
-}
-
-.login button:hover {
-    background: #e65c00;
-    transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba(255,111,0,0.6);
+    box-shadow: 0 0 30px rgba(255, 111, 0, 0.6);
 }
