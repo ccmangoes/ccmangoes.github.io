@@ -2,3 +2,7 @@
   width: 20px;   /* or 16px, 24px, etc. */
   height: auto;  /* Keeps aspect ratio */
 }
+
+img.stripeLogo {
+  background-color: transparent !important;
+}
