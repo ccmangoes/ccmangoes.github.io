@@ -1,5 +1,5 @@
 .stripeLogo {
-  width: 20px;   /* or 16px, 24px, etc. */
+  width: 100px;   /* or 16px, 24px, etc. */
   height: auto;  /* Keeps aspect ratio */
 }
 
