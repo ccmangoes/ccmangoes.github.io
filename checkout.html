@@ -21,7 +21,7 @@
   <h2>Your Items</h2>
   <ul id="cart-list"></ul>
   <p><strong>Total: $<span id="total">0</span></strong></p>
-  <button class="button id="payStripe">Pay with Card</button>
+  <button class="button id="payCard">Pay with Card</button>
   <button id="payCash" class="button">Pay with Cash</button>
   <div id="confirmation"></div>
 
@@ -30,7 +30,7 @@
     const cartList = document.getElementById('cart-list');
     const totalEl = document.getElementById('total');
     const payCashBtn = document.getElementById('payCash');
-    const payStripeBtn = document.getElementById('payStripe');
+    const payCardBtn = document.getElementById('payCard');
     const confirmationEl = document.getElementById('confirmation');
     let total = 0;
 
@@ -43,71 +43,49 @@
 
     totalEl.textContent = total;
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const payCashBtn = document.getElementById('payCash');
-      const payStripeBtn = document.getElementById('payStripe');
+    payCashBtn.addEventListener('click', async () => {
+      const name = document.getElementById('name').value;
+      const studentId = document.getElementById('studentId').value;
+      if (!name || !studentId) {
+        alert('Please fill in your name and student ID.');
+        return;
+      }
 
-      payCashBtn.addEventListener('click', async () => {
-        const name = document.getElementById('name').value.trim();
-        const studentId = document.getElementById('studentId').value.trim();
-
-        if (!name || !studentId) {
-          alert('Please fill in your name and student ID.');
-          return;
-        }
-
-        try {
-          const response = await fetch('https://shop-backend-zanw.onrender.com/checkout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              name,
-              studentId,
-              items: cartItems,
-              paymentMethod: 'cash'
-            })
-          });
-
-          console.log('Response status:', response.status);
-
-          const data = await response.json();
-          console.log('Response data:', data);
-
-          if (!response.ok) {
-            alert(`Error: ${data.error || 'Unknown error'}`);
-            return;
-          }
-
-          const confirmationDiv = document.getElementById('confirmation');
-          confirmationDiv.innerHTML = `<strong>Order placed!</strong><br>Show this code to pay in cash: <strong>#${data.orderId}</strong>`;
-        } catch (err) {
-          console.error('Error during order:', err);
-          alert('There was an error placing your order.');
-        }
-      });
-
-
-      payStripeBtn.addEventListener('click', async () => {
-        const name = document.getElementById('name').value.trim();
-        const studentId = document.getElementById('studentId').value.trim();
-
-        if (!name || !studentId) {
-          alert('Please fill in your name and student ID.');
-          return;
-        }
-        
-        const response = await fetch('https://shop-backend-zanw.onrender.com/create-checkout-session', {
+      try {
+        const res = await fetch('https://shop-backend-zanw.onrender.com/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: cartItems })
+          body: JSON.stringify({ name, studentId, items: cart, paymentMethod: 'cash' })
         });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Unknown error');
+        confirmationEl.innerHTML = `Order placed! Show this code to pay in cash: <strong>#${data.orderId}</strong>`;
+        localStorage.removeItem('cart');
+      } catch (err) {
+        console.error(err);
+        alert('There was an error placing your order.');
+      }
+    });
 
-        const data = await response.json();
-        if (data.url) {
-          window.location.href = data.url; // redirect to Stripe
-        }
+    payCardBtn.addEventListener('click', async () => {
+      const name = document.getElementById('name').value.trim();
+      const studentId = document.getElementById('studentId').value.trim();
+
+      if (!name || !studentId) {
+        alert('Please fill in your name and student ID.');
+        return;
+      }
+        
+      const response = await fetch('https://shop-backend-zanw.onrender.com/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: cartItems })
       });
 
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url; // redirect to Stripe
+      }
     });
   </script>
 </body>
