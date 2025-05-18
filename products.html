@@ -13,7 +13,7 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   />
-  <!-- 2) Your dark mode CSS & script -->
+  <!-- Dark Mode -->
   <link rel="stylesheet" href="assets/styles/darkMode.css">
   <script src="assets/scripts/darkMode.js" defer></script>
   <title>Browse Products - 3D Print Store</title>
@@ -25,28 +25,34 @@
 </head>
 <body>
   <h1>Browse Products</h1>
+
   <div class="product" data-name="Phone Stand" data-price="5">
     <h2>Phone Stand</h2>
     <p>Price: $5</p>
     <button class="add-to-cart">Add to Cart</button>
   </div>
+
   <div class="product" data-name="Keychain" data-price="3">
     <h2>Keychain</h2>
     <p>Price: $3</p>
     <button class="add-to-cart">Add to Cart</button>
   </div>
-  <a href="cart">Go to Cart</a>
+
+  <a href="cart.html" class="button">Go to Cart</a>
 
   <script>
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+      btn.addEventListener('click', e => {
+        // always fetch the latest cart
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    document.querySelectorAll('.add-to-cart').forEach(button => {
-      button.addEventListener('click', e => {
-        const parent = e.target.closest('.product');
-        const name = parent.dataset.name;
-        const price = parseFloat(parent.dataset.price);
+        const product = e.currentTarget.closest('.product');
+        const name = product.dataset.name;
+        const price = parseFloat(product.dataset.price);
+
         cart.push({ name, price });
         localStorage.setItem('cart', JSON.stringify(cart));
+
         alert(`${name} added to cart!`);
       });
     });
