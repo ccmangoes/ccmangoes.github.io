@@ -53,6 +53,7 @@
     <li>Phone Stand - $5</li>
     <li>Keychain - $3</li>
   </ul>
+  <p><strong>Total: $<span id="total">0</span></strong></p>
 
   <button class="button" id="payStripe">
     <img src="assets/images/stripe.png" alt="Stripe Logo" id="stripeLogo">
@@ -80,6 +81,26 @@
 
   <script>
     const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartList = document.getElementById("cart");
+    const totalEl = document.getElementById('total');
+    let total = 0
+
+    cartItems.forEach((item, index) => {
+      const li = document.createElement('li');
+      li.textContent = `${item.name} - $${item.price}`;
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = 'Remove';
+      removeBtn.onclick = () => {
+        cartItems.splice(index, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        location.reload();
+      };
+      li.appendChild(removeBtn);
+      cartList.appendChild(li);
+      total += item.price;
+    });
+
+    totalEl.textContent = total;
 
     document.addEventListener('DOMContentLoaded', () => {
       const payCashBtn = document.getElementById('payCash');
