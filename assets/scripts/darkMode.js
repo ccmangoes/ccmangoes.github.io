@@ -1,9 +1,10 @@
+// assets/scripts/darkMode.js
 document.addEventListener('DOMContentLoaded', () => {
-  // Create the wrapper
+  // 1) Create the wrapper
   const wrapper = document.createElement('div');
   wrapper.className = 'd2 lightDarkToggle';
 
-  // Build the checkbox + label with FontAwesome <i> tags
+  // 2) Inject the checkbox + label + icons
   wrapper.innerHTML = `
     <input type="checkbox" class="d2 checkbox" id="theme-checkbox">
     <label for="theme-checkbox" class="d2 checkbox-label">
@@ -15,21 +16,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.body.appendChild(wrapper);
 
-  // Cache elements
+  // 3) Grab the checkbox
   const checkbox = document.getElementById('theme-checkbox');
 
-  // Initialize from localStorage
+  // 4) Initialize state from localStorage
   if (localStorage.getItem('theme') === 'dark') {
-    document.body.classList.add('dark');
+    document.documentElement.classList.add('dark');
     checkbox.checked = true;
   }
 
-  // Wire the toggle
+  // 5) Wire up toggle
   checkbox.addEventListener('change', () => {
-    document.body.classList.toggle('dark');
-    localStorage.setItem(
-      'theme',
-      document.body.classList.contains('dark') ? 'dark' : 'light'
-    );
+    const isDark = checkbox.checked;
+    document.documentElement.classList.toggle('dark', isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
   });
 });

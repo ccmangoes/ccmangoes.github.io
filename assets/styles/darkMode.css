@@ -52,52 +52,52 @@ html, body {
 }
 
 .d2.lightDarkToggle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
 }
 
 .d2.checkbox {
-    opacity: 0;
-    box-sizing: border-box;
-    position: absolute;
+  opacity: 0;
+  box-sizing: border-box;
+  position: absolute;
 }
 
 .d2.checkbox-label {
-    background-color: #363636;
-    width: 60px;
-    height: 30px;
-    border-radius: 50px;
-    position: relative;
-    padding: 5px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-sizing: border-box;
+  background-color: #363636;
+  width: 60px;
+  height: 30px;
+  border-radius: 50px;
+  position: relative;
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .d2.fa-moon {
-    color: #f1c40f;
+  color: #f1c40f;
 }
 
 .d2.fa-sun {
-    color: #f39c12;
+  color: #f39c12;
 }
 
 .d2.checkbox-label .d2.ball {
-    background-color: #fff;
-    width: 26px;
-    height: 26px;
-    position: absolute;
-    left: 2px;
-    top: 2px;
-    border-radius: 50%;
-    transition: transform 0.2s linear;
-    box-sizing: border-box;
+  background-color: #fff;
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  border-radius: 50%;
+  transition: transform 0.2s linear;
+  box-sizing: border-box;
 }
 
-.d2.checkbox:checked+.d2.checkbox-label .d2.ball {
-    transform: translateX(30px);
+.d2.checkbox:checked + .d2.checkbox-label .d2.ball {
+  transform: translateX(30px);
 }
