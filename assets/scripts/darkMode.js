@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
   wrapper.innerHTML = `
     <input type="checkbox" class="d2 checkbox" id="theme-checkbox">
     <label for="theme-checkbox" class="d2 checkbox-label">
-      <i class="d2 fa-moon"></i>
-      <i class="d2 fa-sun"></i>
+      <i class="d2 fas fa-moon"></i>
+      <i class="d2 fas fa-sun"></i>
       <span class="d2 ball"></span>
     </label>
   `;
