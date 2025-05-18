@@ -1,47 +1,47 @@
-/* define your light/dark variables */
-:root {
-  --bg: #fff;
-  --fg: #111;
-}
-.dark {
-  --bg: #111;
-  --fg: #fff;
-}
-
-body {
-  background: var(--bg);
-  color: var(--fg);
-  transition: background .3s, color .3s;
-}
-
-/* switch styling */
+/* Switch styling */
 .switch {
   position: fixed;
   bottom: 1rem;
   right: 1rem;
+  display: inline-block;
   width: 50px;
   height: 26px;
+  z-index: 1000;
 }
-.switch input { display: none; }
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
 .slider {
-  position: absolute; inset: 0;
-  border-radius: 13px;
-  background: #ccc;
-  cursor: pointer;
-  transition: background .3s;
-}
-.slider::before {
-  content: "";
   position: absolute;
-  width: 22px; height: 22px;
-  top: 2px; left: 2px;
-  border-radius: 50%;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #ccc;
+  border-radius: 34px;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 2px;
+  bottom: 2px;
   background: white;
-  transition: transform .3s;
+  transition: .4s;
+  border-radius: 50%;
 }
 input:checked + .slider {
-  background: #444;
+  background: #2196F3;
 }
-input:checked + .slider::before {
+input:checked + .slider:before {
   transform: translateX(24px);
 }
+
+/* Dark mode */
+html.dark {
+  background: #121212;
+  color: #eee;
+}
+/* any other dark styles here */
