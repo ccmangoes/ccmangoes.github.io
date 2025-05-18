@@ -1,70 +1,47 @@
-/* Toggle container */
-#dark-mode-toggle {
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
-  display: flex;
-  align-items: center;
-  font-family: inherit;
-  font-size: 0.9rem;
-  z-index: 1000;
-  user-select: none;
+/* define your light/dark variables */
+:root {
+  --bg: #fff;
+  --fg: #111;
+}
+.dark {
+  --bg: #111;
+  --fg: #fff;
 }
 
-/* Switch styling */
+body {
+  background: var(--bg);
+  color: var(--fg);
+  transition: background .3s, color .3s;
+}
+
+/* switch styling */
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 40px;
-  height: 20px;
-  margin-right: 8px;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 50px;
+  height: 26px;
 }
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
+.switch input { display: none; }
 .slider {
-  position: absolute;
+  position: absolute; inset: 0;
+  border-radius: 13px;
+  background: #ccc;
   cursor: pointer;
-  inset: 0;
-  background-color: #ccc;
-  border-radius: 20px;
-  transition: 0.3s;
+  transition: background .3s;
 }
-
-.slider:before {
+.slider::before {
   content: "";
   position: absolute;
-  height: 16px;
-  width: 16px;
-  left: 2px;
-  bottom: 2px;
-  background-color: white;
+  width: 22px; height: 22px;
+  top: 2px; left: 2px;
   border-radius: 50%;
-  transition: 0.3s;
+  background: white;
+  transition: transform .3s;
 }
-
 input:checked + .slider {
-  background-color: #4A90E2;
+  background: #444;
 }
-
-input:checked + .slider:before {
-  transform: translateX(20px);
+input:checked + .slider::before {
+  transform: translateX(24px);
 }
-
-/* Dark mode base overrides */
-body.dark {
-  background-color: #121212;
-  color: #e0e0e0;
-}
-
-/* OPTIONAL: only override backgrounds of non-button elements if needed */
-/* e.g., links */
-body.dark a {
-  color: #8ab4f8;
-}
-
-/* Note: No body.dark button rule, so your buttons stay styled as-is */
