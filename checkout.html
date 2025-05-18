@@ -79,10 +79,7 @@
   <div id="confirmation" style="margin-top:20px;"></div>
 
   <script>
-    const cartItems = [
-      { name: 'Phone Stand', price: 5 },
-      { name: 'Keychain', price: 3 }
-    ];
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
 
     document.addEventListener('DOMContentLoaded', () => {
       const payCashBtn = document.getElementById('payCash');
