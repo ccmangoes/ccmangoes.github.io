@@ -45,3 +45,8 @@ html.dark {
   color: #eee;
 }
 /* any other dark styles here */
+
+html, body {
+  /* add transition to bg and text */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
