@@ -63,12 +63,11 @@ body.dark {
   color: #e0e0e0;
 }
 
-/* Example: invert button colors in dark mode */
-button {
+/* button {
   background-color: #fff;
   color: #000;
 }
 body.dark button {
   background-color: #333;
   color: #fff;
-}
+} */
