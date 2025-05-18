@@ -49,10 +49,7 @@
   <input type="text" id="studentId"><br><br>
 
   <h3>Your Items</h3>
-  <ul id="cart">
-    <li>Phone Stand - $5</li>
-    <li>Keychain - $3</li>
-  </ul>
+  <ul id="cart"></ul>
   <p><strong>Total: $<span id="total">0</span></strong></p>
 
   <button class="button" id="payStripe">
@@ -89,6 +86,7 @@
       const li = document.createElement('li');
       li.textContent = `${item.name} - $${item.price}`;
       const removeBtn = document.createElement('button');
+      removeBtn.class = "button"
       removeBtn.textContent = 'Remove';
       removeBtn.onclick = () => {
         cartItems.splice(index, 1);
