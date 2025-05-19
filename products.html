@@ -41,19 +41,17 @@
   <a href="cart.html" class="button">Go to Cart</a>
 
   <script>
-    document.querySelectorAll('.add-to-cart').forEach(btn => {
-      btn.addEventListener('click', e => {
-        // always fetch the latest cart
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        const product = e.currentTarget.closest('.product');
-        const name = product.dataset.name;
-        const price = parseFloat(product.dataset.price);
-
-        cart.push({ name, price });
-        localStorage.setItem('cart', JSON.stringify(cart));
-
-        alert(`${name} added to cart!`);
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const cart = JSON.parse(localStorage.getItem('cart')) || [];
+          const product = e.currentTarget.closest('.product');
+          const name    = product.dataset.name;
+          const price   = parseFloat(product.dataset.price);
+          cart.push({ name, price });
+          localStorage.setItem('cart', JSON.stringify(cart));
+          alert(`${name} added to cart!`);
+        });
       });
     });
   </script>
