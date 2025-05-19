@@ -26,41 +26,27 @@
 </head>
 <body>
   <h1>Browse Products</h1>
-  <div class="product" data-name="Phone Stand" data-price="5">
-    <h2>Phone Stand</h2>
-    <p>Price: $5</p>
-    <button class="add-to-cart">Add to Cart</button>
-  </div>
 
-  <div class="product" data-name="Keychain" data-price="3">
-    <h2>Keychain</h2>
-    <p>Price: $3</p>
-    <button class="add-to-cart">Add to Cart</button>
+  <div id="products">
+    <div class="product" data-name="Phone Stand" data-price="5">
+       <h2>Phone Stand</h2>
+       <p>Price: $5</p>
+       <button class="add-to-cart">Add to Cart</button>
+     </div>
+ 
+     <div class="product" data-name="Keychain" data-price="3">
+       <h2>Keychain</h2>
+       <p>Price: $3</p>
+       <button class="add-to-cart">Add to Cart</button>
+     </div>
+  <!-- end of products list -->
+
   </div>
+  <!-- end of #products -->
+
 
   <a href="cart.html" class="button">Go to Cart</a>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const productsContainer = document.getElementsByClassName('product');
-
-      productsContainer.addEventListener('click', e => {
-        // if the clicked thing isn’t an “Add to Cart” button, bail out
-        if (!e.target.matches('.add-to-cart')) return;
-
-        const btn     = e.target;
-        const product = btn.closest('.product');
-        const name    = product.dataset.name;
-        const price   = parseFloat(product.dataset.price);
-
-        // update localStorage cart
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        cart.push({ name, price });
-        localStorage.setItem('cart', JSON.stringify(cart));
-
-        alert(`${name} added to cart!`);
-      });
-    });
-  </script>
+  <script src="assets/scripts/products.js"></script>
 </body>
 </html>
