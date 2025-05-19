@@ -26,7 +26,6 @@
 </head>
 <body>
   <h1>Browse Products</h1>
-
   <div class="product" data-name="Phone Stand" data-price="5">
     <h2>Phone Stand</h2>
     <p>Price: $5</p>
@@ -43,28 +42,23 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // 1) Tell us the script is running
-      alert('Products script running…');
+      const productsContainer = document.getElementsByClassName('product');
 
-      // 2) Grab all the buttons
-      const buttons = document.querySelectorAll('.add-to-cart');
-      alert('Found ' + buttons.length + ' add-to-cart buttons.');
+      productsContainer.addEventListener('click', e => {
+        // if the clicked thing isn’t an “Add to Cart” button, bail out
+        if (!e.target.matches('.add-to-cart')) return;
 
-      buttons.forEach(btn => {
-        btn.addEventListener('click', event => {
-          // 3) Tell us this handler fired
-          alert('Button clicked: ' + event.currentTarget.innerText);
+        const btn     = e.target;
+        const product = btn.closest('.product');
+        const name    = product.dataset.name;
+        const price   = parseFloat(product.dataset.price);
 
-          // Now your real cart logic:
-          const cart = JSON.parse(localStorage.getItem('cart')) || [];
-          const product = event.currentTarget.closest('.product');
-          const name = product.dataset.name;
-          const price = parseFloat(product.dataset.price);
-          cart.push({ name, price });
-          localStorage.setItem('cart', JSON.stringify(cart));
+        // update localStorage cart
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.push({ name, price });
+        localStorage.setItem('cart', JSON.stringify(cart));
 
-          alert(name + ' added to cart!');
-        });
+        alert(`${name} added to cart!`);
       });
     });
   </script>
