@@ -43,17 +43,27 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const addButtons = document.querySelectorAll('.add-to-cart');
-      if (!addButtons.length) return;
-      addButtons.forEach(btn => {
+      // 1) Tell us the script is running
+      alert('Products script running…');
+
+      // 2) Grab all the buttons
+      const buttons = document.querySelectorAll('.add-to-cart');
+      alert('Found ' + buttons.length + ' add-to-cart buttons.');
+
+      buttons.forEach(btn => {
         btn.addEventListener('click', event => {
+          // 3) Tell us this handler fired
+          alert('Button clicked: ' + event.currentTarget.innerText);
+
+          // Now your real cart logic:
           const cart = JSON.parse(localStorage.getItem('cart')) || [];
-          const productEl = event.currentTarget.closest('.product');
-          const name = productEl.dataset.name;
-          const price = parseFloat(productEl.dataset.price);
+          const product = event.currentTarget.closest('.product');
+          const name = product.dataset.name;
+          const price = parseFloat(product.dataset.price);
           cart.push({ name, price });
           localStorage.setItem('cart', JSON.stringify(cart));
-          alert(`${name} added to cart!`);
+
+          alert(name + ' added to cart!');
         });
       });
     });
