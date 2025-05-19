@@ -16,41 +16,44 @@
   <!-- 2) Your dark mode CSS & script -->
   <link rel="stylesheet" href="assets/styles/darkMode.css">
   <script src="assets/scripts/darkMode.js" defer></script>
-  <title>Your Cart - 3D Print Store</title>
+  <title>Your Cart</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
-    li { margin-bottom: 10px; }
-    button { margin-left: 10px; }
+    ul { list-style: none; padding: 0; }
+    li { border-bottom: 1px solid #ccc; padding: 10px 0; }
+    .total { font-weight: bold; margin-top: 20px; }
   </style>
 </head>
 <body>
   <h1>Your Cart</h1>
-  <ul id="cart-list"></ul>
-  <p><strong>Total: $<span id="total">0</span></strong></p>
-  <a href="checkout" class="button">Proceed to Checkout</a>
+  <ul id="cart-list">
+    <!-- items will go here -->
+  </ul>
+  <div class="total" id="cart-total"></div>
 
   <script>
+    // 1) Load cart from localStorage
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartList = document.getElementById('cart-list');
-    const totalEl = document.getElementById('total');
-    let total = 0;
 
-    cart.forEach((item, index) => {
-      const li = document.createElement('li');
-      li.textContent = `${item.name} - $${item.price}`;
-      const removeBtn = document.createElement('button');
-      removeBtn.textContent = 'Remove';
-      removeBtn.onclick = () => {
-        cart.splice(index, 1);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        location.reload();
-      };
-      li.appendChild(removeBtn);
-      cartList.appendChild(li);
-      total += item.price;
-    });
+    const list = document.getElementById('cart-list');
+    const totalDiv = document.getElementById('cart-total');
 
-    totalEl.textContent = total;
+    if (cart.length === 0) {
+      list.innerHTML = '<li>Your cart is empty.</li>';
+      totalDiv.textContent = '';
+    } else {
+      // 2) Render each item
+      let total = 0;
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} — $${item.price.toFixed(2)}`;
+        list.appendChild(li);
+        total += item.price;
+      });
+
+      // 3) Show total
+      totalDiv.textContent = `Total: $${total.toFixed(2)}`;
+    }
   </script>
 </body>
 </html>
