@@ -21,6 +21,7 @@
     body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
     .product { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
     button { padding: 6px 12px; margin-top: 10px; cursor: pointer; }
+    a.button { display: inline-block; padding: 6px 12px; background: #5cb85c; color: #fff; text-decoration: none; border-radius: 4px; }
   </style>
 </head>
 <body>
@@ -42,12 +43,14 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.add-to-cart').forEach(btn => {
-        btn.addEventListener('click', e => {
+      const addButtons = document.querySelectorAll('.add-to-cart');
+      if (!addButtons.length) return;
+      addButtons.forEach(btn => {
+        btn.addEventListener('click', event => {
           const cart = JSON.parse(localStorage.getItem('cart')) || [];
-          const product = e.currentTarget.closest('.product');
-          const name    = product.dataset.name;
-          const price   = parseFloat(product.dataset.price);
+          const productEl = event.currentTarget.closest('.product');
+          const name = productEl.dataset.name;
+          const price = parseFloat(productEl.dataset.price);
           cart.push({ name, price });
           localStorage.setItem('cart', JSON.stringify(cart));
           alert(`${name} added to cart!`);
