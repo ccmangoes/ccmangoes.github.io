@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="assets/styles/buttons.css">
   <link rel="stylesheet" href="assets/styles/text.css">
   <link
@@ -15,29 +16,13 @@
   <!-- 2) Your dark mode CSS & script -->
   <link rel="stylesheet" href="assets/styles/darkMode.css">
   <script src="assets/scripts/darkMode.js" defer></script>
-  <title>3D Print Store</title>
+  <title>Mango Shop</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       max-width: 600px;
       margin: 0 auto;
       padding: 20px;
-    }
-    .product {
-      margin-bottom: 20px;
-    }
-    .btn {
-      padding: 10px 20px;
-      margin: 5px;
-      cursor: pointer;
-    }
-    .cash {
-      background-color: #f0ad4e;
-      color: white;
-    }
-    .stripe {
-      background-color: #5cb85c;
-      color: white;
     }
   </style>
 </head>
@@ -85,7 +70,7 @@
         }
 
         try {
-          const response = await fetch('https://shop-backend-zanw.onrender.com/checkout', {
+          const response = await fetch('shop-backend.netlify.app/checkout', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -124,7 +109,7 @@
           return;
         }
         
-        const response = await fetch('https://shop-backend-zanw.onrender.com/create-checkout-session', {
+        const response = await fetch('shop-backend.netlify.app/create-checkout-session', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ items: cartItems })

@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="assets/styles/buttons.css">
   <link rel="stylesheet" href="assets/styles/text.css">
   <link
@@ -13,39 +14,55 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   />
+  <script src="assets/scripts/cart.js" defer></script>
+  <link rel="stylesheet" href="assets/styles/cart.css">
   <!-- Dark Mode -->
   <link rel="stylesheet" href="assets/styles/darkMode.css">
   <script src="assets/scripts/darkMode.js" defer></script>
-  <title>Browse Products - 3D Print Store</title>
+  <link rel="stylesheet" href="assets/styles/images.css">
+  <title>Browse Products - Mango Shop</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
     .product { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
     button { padding: 6px 12px; margin-top: 10px; cursor: pointer; }
-    a.button { display: inline-block; padding: 6px 12px; background: #5cb85c; color: #fff; text-decoration: none; border-radius: 4px; }
+    a.button { display: inline-block; padding: 6px 12px; color: #fff; text-decoration: none;}
   </style>
 </head>
 <body>
-  <h1>Browse Products</h1>
+  <h1>Browse Mangoes</h1>
 
   <div id="products">
-    <div class="product" data-name="Phone Stand" data-price="5">
-       <h2>Phone Stand</h2>
+    <div class="product" data-name="Banginapalli" data-price="5">
+       <h2>Banginapalli</h2>
        <p>Price: $5</p>
        <button class="add-to-cart">Add to Cart</button>
+       <img class="productImg" src="assets/images/baginapalli.png">
      </div>
  
-     <div class="product" data-name="Keychain" data-price="3">
-       <h2>Keychain</h2>
+     <div class="product" data-name="Himayat" data-price="3">
+       <h2>Himayat</h2>
        <p>Price: $3</p>
        <button class="add-to-cart">Add to Cart</button>
+       <img class="productImg" src="assets/images/himayat.png">
+     </div>
+
+     <div class="product" data-name="Kesar" data-price="3">
+       <h2>Kesar</h2>
+       <p>Price: $3</p>
+       <button class="add-to-cart">Add to Cart</button>
+       <img class="productImg" src="assets/images/kesar.png">
+     </div>
+
+     <div class="product" data-name="Rasalu" data-price="3">
+       <h2>Rasalu</h2>
+       <p>Price: $3</p>
+       <button class="add-to-cart">Add to Cart</button>
+       <img class="productImg" src="assets/images/rasalu.png">
      </div>
   <!-- end of products list -->
 
   </div>
   <!-- end of #products -->
-
-
-  <a href="cart.html" class="button">Go to Cart</a>
 
   <script src="assets/scripts/products.js"></script>
 </body>
