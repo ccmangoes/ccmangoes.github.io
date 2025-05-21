@@ -16,15 +16,18 @@
   box-sizing: border-box;
 }
 
-.navbar a .floating-cart {
+.navbar a {
   color: white;
   text-decoration: none;
   position: relative;
+}
+
+.navbar a .floating-cart {
   transition: background 0.3s ease, box-shadow 0.3s ease;
-  margin-top: 30px;
-  margin: 20px;
-  top: 20px;
-  right: 20px;
+  margin-top: 15px;
+  margin: 10px;
+  top: 10px;
+  right: 10px;
 }
 
 .cart-count {
@@ -38,7 +41,11 @@
   right: -15px;
 }
 
-.navbar a:hover {
+/*.navbar a:hover {
+  
+}*/
+
+.navbar a:hover .floating-cart {
   background: gray;
   box-shadow: 0 0 18px white;
 }
