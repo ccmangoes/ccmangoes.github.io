@@ -14,13 +14,13 @@
   box-shadow: 0 2px 8px rgba(0, 255, 100, 0.3); /* greenish shadow */
   font-size: 1.5rem;
   box-sizing: border-box;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .navbar a {
   color: white;
   text-decoration: none;
   position: relative;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .cart-count {
