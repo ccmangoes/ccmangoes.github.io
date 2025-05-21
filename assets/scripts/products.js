@@ -37,5 +37,6 @@
       console.error('products.js storage error:', err);
       alert('Sorry, could not save to cart: ' + err.message);
     }
+    updateCartCount();
   });
 })();
