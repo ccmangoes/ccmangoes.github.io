@@ -2,8 +2,8 @@ const navbar = document.createElement("div");
 navbar.className = "navbar";
 navbar.innerHTML = `
   <a href="index.html" class="logo">🏠</a>
-  <a href="cart.html" class="cart-icon">
-    🛒 <span id="cart-count" class="cart-count">0</span>
+  <a href="cart" class="floating-cart">
+    <i class="fas fa-shopping-cart"></i> <span id="cart-count" class="cart-count">0</span>
   </a>
 `;
 document.body.prepend(navbar);
