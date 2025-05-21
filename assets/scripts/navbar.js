@@ -1,4 +1,3 @@
-// Create navbar container
 const navbar = document.createElement("div");
 navbar.className = "navbar";
 navbar.innerHTML = `
@@ -9,24 +8,19 @@ navbar.innerHTML = `
 `;
 document.body.prepend(navbar);
 
-// Optional spacer to prevent overlap
+// Spacer so content doesn't get hidden behind navbar
 const spacer = document.createElement("div");
 spacer.style.height = "60px";
 document.body.insertBefore(spacer, navbar.nextSibling);
 
-// Function to update cart count
+// Update cart count
 function updateCartCount() {
   try {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const count = cart.length;
-    document.getElementById("cart-count").textContent = count;
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    document.getElementById("cart-count").textContent = cart.length;
   } catch {
     document.getElementById("cart-count").textContent = "0";
   }
 }
-
-// Update on load
 updateCartCount();
-
-// Update whenever cart is changed
 window.addEventListener("storage", updateCartCount);
