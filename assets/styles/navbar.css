@@ -46,8 +46,8 @@
 }*/
 
 .navbar a:hover .floating-cart {
-  background: gray;
-  box-shadow: 0 0 18px white;
+  background: gray !important;
+  box-shadow: 0 0 18px white !important;
 }
 
 body {
