@@ -74,6 +74,7 @@
       })
       .then(res => {
         if (!res.ok) throw new Error('Unauthorized');
+        alert("Incorrect password");
         return res.json();
       })
       .then(() => {
@@ -95,7 +96,7 @@
 
       fetch(`${backend}/admin`, {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `${token}`
         }
       })
       .then(res => res.json())

@@ -115,7 +115,7 @@
         }
 
         try {
-          const response = await fetch('https://shop-backend-production-eb9d.up.railway.app/checkout', {
+          const response = await fetch('https://shop-backend-production-eb9d.up.railway.app//checkout', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -131,9 +131,10 @@
 
           document.getElementById('confirmation').innerHTML =
             `<strong>Order placed!</strong><br>Show this code to pay in cash: <strong>#${data.orderId}</strong>`;
+          localStorage.removeItem('cart'); // Clear cart
         } catch (err) {
-          console.error('Error during order:', err);
-          alert('There was an error placing your order.');
+          console.error('Error:', err);
+          alert('Order failed: ' + err.message);
         }
       });
 
@@ -146,20 +147,27 @@
           return;
         }
 
+
         try {
-          const response = await fetch('https://shop-backend-production-eb9d.up.railway.app/create-checkout-session', {
+          const response = await fetch('https://shop-backend-production-eb9d.up.railway.app/checkout', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ items: cartItems })
+            body: JSON.stringify({
+              name,
+              studentId,
+              items: cartItems,
+              paymentMethod: 'card'
+            })
           });
 
           const data = await response.json();
-          if (!response.ok) throw new Error(data.error || 'Failed to create Stripe session');
+          if (!response.ok) throw new Error(data.error || 'Payment failed');
 
+          // Redirect to Stripe
           window.location.href = data.url;
         } catch (err) {
-          console.error('Stripe session error:', err);
-          alert('Unable to start card payment. Please try again later.');
+            console.error('Payment error:', err);
+            alert('Payment failed: ' + err.message);
         }
       });
     });
